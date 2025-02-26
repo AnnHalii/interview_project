@@ -51,9 +51,10 @@ def test_list_redirect_rules(regular_user, regular_auth_client, admin_user_rule)
     response = regular_auth_client.get(url)
 
     assert response.status_code == 200
-    assert len(response.data) == 2
-    assert response.data[0]["id"] == str(regular_rule_1.id)
-    assert response.data[1]["id"] == str(regular_rule_2.id)
+    results = response.data["results"]
+    assert len(results) == 2
+    assert results[0]["id"] == str(regular_rule_1.id)
+    assert results[1]["id"] == str(regular_rule_2.id)
     assert RedirectRule.objects.filter(id=admin_user_rule.id).exists()
 
 
